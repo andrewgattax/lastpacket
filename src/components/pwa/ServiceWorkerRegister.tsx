@@ -10,16 +10,53 @@ export function ServiceWorkerRegister() {
   useEffect(() => {
     // 1. Register Service Worker for offline PWA caching
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
+      const syncLoadedAssets = () => {
+        if (!navigator.serviceWorker.controller) return;
+        try {
+          const resources = performance
+            .getEntriesByType("resource")
+            .map((entry) => entry.name)
+            .filter((url) => url.includes("/_next/static/") || url.endsWith(".png") || url.endsWith(".svg"));
+
+          if (resources.length > 0) {
+            navigator.serviceWorker.controller.postMessage({
+              type: "CACHE_RESOURCES",
+              resources,
+            });
+          }
+        } catch {
+          // ignore
+        }
+      };
+
+      const registerSW = () => {
         navigator.serviceWorker
           .register("/sw.js")
           .then((registration) => {
             console.log("[PWA] Service Worker registered with scope:", registration.scope);
+
+            // Sync already loaded scripts/chunks once controller is ready
+            if (navigator.serviceWorker.controller) {
+              syncLoadedAssets();
+            } else {
+              navigator.serviceWorker.addEventListener("controllerchange", syncLoadedAssets, { once: true });
+            }
+
+            // Warm up /viewer route in background cache if online
+            if (navigator.onLine) {
+              fetch("/viewer", { cache: "no-cache" }).catch(() => {});
+            }
           })
           .catch((error) => {
             console.warn("[PWA] Service Worker registration failed:", error);
           });
-      });
+      };
+
+      if (document.readyState === "complete") {
+        registerSW();
+      } else {
+        window.addEventListener("load", registerSW);
+      }
     }
 
     // 2. Network connectivity listeners
