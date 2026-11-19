@@ -14,9 +14,6 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-xl font-bold tracking-tight text-zinc-100">LastPacket</h1>
-              <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                PWA Desktop
-              </span>
             </div>
             <p className="text-xs text-zinc-400">FPV Drone Flight Telemetry Inspector</p>
           </div>
