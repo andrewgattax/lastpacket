@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && opennextjs-cloudflare build --skipNextBuild",
+    "build:next": "next build",
+    "build:worker": "opennextjs-cloudflare build",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start"
   },
   "dependencies": {
@@ -18,6 +22,7 @@
     "recharts": "^3.11.0"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.17",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/leaflet": "^1.9.22",
     "@types/node": "^20",
@@ -26,6 +31,7 @@
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "4.3.3",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.165.0"
   }
 }
