@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { FlightDataProvider } from "@/context/FlightDataContext";
+import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-[#0a0a0c] text-[#e4e4e7]">
         <FlightDataProvider>{children}</FlightDataProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
