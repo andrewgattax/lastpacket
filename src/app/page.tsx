@@ -24,8 +24,6 @@ export default function HomePage() {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             EdgeTX / OpenTX
           </div>
-          <span className="text-zinc-600">•</span>
-          <div>Next.js 16.4</div>
         </div>
       </header>
 
@@ -82,7 +80,7 @@ export default function HomePage() {
 
       {/* Footer */}
       <footer className="mt-8 text-center text-xs text-zinc-500 font-mono">
-        LastPacket • FPV Blackbox & Telemetry Suite
+        @ 2026 andrewgattax • Last Packet
       </footer>
     </main>
   );
